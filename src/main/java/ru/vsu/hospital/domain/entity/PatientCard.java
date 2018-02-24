@@ -14,9 +14,8 @@ public class PatientCard {
     private Date arrivalDate;
     private Date leavingDate;
     private Department department;
-    private Doctor doctor;
+    private Doctor doctor=new Doctor();
     private int room;
     private String diagnosis;
     private List<Treatment> treatments;
-
 }
