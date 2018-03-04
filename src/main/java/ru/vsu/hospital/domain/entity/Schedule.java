@@ -33,4 +33,14 @@ public class Schedule {
         this.id = id;
         return this;
     }
+
+    Schedule setDate(Date date) {
+        this.date = date;
+        return this;
+    }
+
+    Schedule setIsDone(boolean isDone) {
+        this.isDone = isDone;
+        return this;
+    }
 }

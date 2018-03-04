@@ -9,6 +9,7 @@ import org.hibernate.annotations.MetaValue;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @EqualsAndHashCode
@@ -26,7 +27,7 @@ public class PatientCard{//<T extends Treatment> {
     private Doctor doctor;
     private int room;
     private String diagnosis;
-    private List<Treatment> treatments;
+    private Set<Treatment> treatments;
 
 
     @Id
@@ -105,30 +106,33 @@ public class PatientCard{//<T extends Treatment> {
 //            inverseJoinColumns = @JoinColumn(name = "treatment_id"))
 
 
-   /* @Any(metaColumn = @Column(name = "treatments", nullable = false))
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "treatment",
-            //foreign key for PatientCardEntity in patient_card_treatment table
-            joinColumns = @JoinColumn(name = "patient_card_id"),
-            //foreign key for other side - TreatmentEntity in patient_card_treatment table
-            inverseJoinColumns = @JoinColumn(name = "treatment_id"))
-   // @JoinColumn(name = "product_id", nullable = false)
-    @AnyMetaDef(
-            idType = "long",
-            metaType = "string",
-            metaValues = {
-                    @MetaValue(value = "Med", targetEntity = Med.class),
-                    @MetaValue(value = "Operation", targetEntity = Operation.class),
-                    @MetaValue(value = "Procedure", targetEntity = Procedure.class),
-                    @MetaValue(value = "Test", targetEntity = Test.class)
-            })
-            List<T> getTreatments() {
-        return treatments;
-    }
-    */
+//    @Any(metaColumn = @Column(name = "treatments", nullable = false))
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "treatment",
+//            //foreign key for PatientCardEntity in patient_card_treatment table
+//            joinColumns = @JoinColumn(name = "patient_card_id"),
+//            //foreign key for other side - TreatmentEntity in patient_card_treatment table
+//            inverseJoinColumns = @JoinColumn(name = "treatment_id"))
+//   // @JoinColumn(name = "product_id", nullable = false)
+//    @AnyMetaDef(
+//            idType = "long",
+//            metaType = "string",
+//            metaValues = {
+//                    @MetaValue(value = "Med", targetEntity = Med.class),
+//                    @MetaValue(value = "Operation", targetEntity = Operation.class),
+//                    @MetaValue(value = "Procedure", targetEntity = Procedure.class),
+//                    @MetaValue(value = "Test", targetEntity = Test.class)
+//            })
+//            List<T> getTreatments() {
+//        return treatments;
+//    }
 
-    @ManyToMany
-   List<Treatment> getTreatments() {
+    @ManyToMany//(mappedBy="entities")
+    @JoinTable(
+            name="treatment_patient_card",
+            joinColumns={@JoinColumn(name="treatment_id", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="patient_card_id", referencedColumnName="id")})
+    Set<Treatment> getTreatments() {
        return treatments;
    }
 
@@ -198,7 +202,7 @@ public class PatientCard{//<T extends Treatment> {
         return this;
     }
 
-    PatientCard setTreatments(List<Treatment> treatments) {
+    PatientCard setTreatments(Set<Treatment> treatments) {
         this.treatments = treatments;
         return this;
     }

@@ -38,7 +38,7 @@ public class Med extends Treatment{
 
     @OneToMany
     @JoinColumn(name = "schedule_id", referencedColumnName = "id", nullable = false)
-    public List<Schedule> getSchedule() {
+    public List<Schedule> getScheduleList() {
         return scheduleList;
     }
 
@@ -62,8 +62,8 @@ public class Med extends Treatment{
         return this;
     }
 
-    Med setOn(boolean on) {
-        isOn = on;
+    Med setIsOn(boolean isOn) {
+        this.isOn = isOn;
         return this;
     }
 }
